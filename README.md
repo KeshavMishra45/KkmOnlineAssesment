@@ -1,69 +1,101 @@
-# Welcome to your Lovable project
+# 🎓 KKM Classroom — Online Assessment Platform
 
-This project was built with [Lovable](https://lovable.dev).
+> A full-stack online assessment platform for teachers and students, featuring secure authentication, exam management, performance analysis, and coding assessments.
 
-## Build with Lovable
+---
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+## 📌 Overview
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+**KKM Classroom** is an online assessment platform designed to simplify the process of creating, conducting, and analyzing examinations.
 
-## Development
+The platform provides separate experiences for **Teachers** and **Students**. Teachers can create and manage exams, view student submissions, and analyze performance, while students can attempt assessments and view their results.
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+The application also supports **coding-based assessments** with code execution through Judge0.
 
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+---
 
-## Built with
+## ✨ Features
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+### 👨‍🏫 Teacher Module
 
-## Auth setup (MongoDB Atlas)
+- Secure teacher authentication
+- Create and manage examinations
+- Create questions using the question builder
+- View submitted student attempts
+- View examination results
+- Analyze student performance
+- View class average and high/low scores
+- View pass/fail statistics
+- View per-student performance
 
-Login now checks real accounts in MongoDB Atlas instead of just remembering
-whatever you typed. To run it locally:
+### 👨‍🎓 Student Module
 
-1. Create a free cluster at https://cloud.mongodb.com, add a database user,
-   and allow your IP under Network Access.
-2. Copy `.env.example` to `.env` and fill in `MONGODB_URI` (from Atlas ->
-   Connect -> Drivers), `MONGODB_DB`, and a random `SESSION_SECRET`.
-3. Install dependencies: `npm i`.
-4. Seed a demo teacher + student so you have something to log in with:
-   ```sh
-   node --env-file=.env scripts/seed-users.mjs
-   ```
-   (On older Node, load the `.env` vars into your shell first.)
-5. `npm run dev`, then sign in at `/login` with either seeded account:
-   - Teacher: `KKM-TEACHER-01` / `01011990`
-   - Student: `KKM2026001` / `05041999`
-6. Add more accounts by editing `USERS_TO_SEED` in `scripts/seed-users.mjs`
-   and re-running it (upserts, so it's safe to run again).
+- Secure student authentication
+- Student dashboard
+- View available examinations
+- Attempt assessments
+- Submit examination answers
+- View examination analysis
+- Access coding examinations
 
-### What's route-protected
+### 💻 Coding Assessment
 
-- `/teacher/*` — teachers only. Anyone else is redirected (to `/login` if
-  signed out, to `/dashboard` if signed in as a student).
-- `/dashboard/*`, `/exams`, `/exam`, `/code-exam/:examId` — signed-in
-  students. A signed-in teacher is redirected to `/teacher`.
-- The header only shows the "Teacher" nav link to teachers, and shows
-  "Dashboard / Exams / Analysis" links only once a student is signed in.
+- Dedicated coding examination workflow
+- Online code submission
+- Code execution using Judge0
+- Support for programming-based assessment workflows
 
-### Teacher routes
+### 🔐 Security & Access Control
 
-- `/teacher` — list/manage exams.
-- `/teacher/create-exam` — create a new exam (redirects into the question
-  builder once created).
-- `/teacher/results` — every submitted attempt across all exams.
-- `/teacher/analysis` — pick an exam and see the marks of every student who
-  has taken it (class average, high/low, per-student chart, pass/fail
-  split).
+- Session-based authentication
+- Role-based route protection
+- Teacher-only and student-only areas
+- Server-side authentication checks
+- MongoDB-backed user accounts
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| **React** | User interface |
+| **TypeScript** | Type-safe development |
+| **TanStack Start** | Full-stack application framework |
+| **Tailwind CSS** | Styling and responsive UI |
+| **MongoDB Atlas** | Database |
+| **MongoDB Node.js Driver** | Database connectivity |
+| **Judge0** | Code execution |
+| **Node.js** | Runtime |
+| **npm** | Package management |
+
+---
+
+## 🏗️ Application Architecture
+
+```text
+                    ┌─────────────────────┐
+                    │       React UI      │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   TanStack Start    │
+                    │   Routes / Server   │
+                    └──────────┬──────────┘
+                               │
+                 ┌─────────────┴─────────────┐
+                 │                           │
+                 ▼                           ▼
+       ┌──────────────────┐        ┌──────────────────┐
+       │ Authentication   │        │ Application      │
+       │ & Sessions       │        │ Logic            │
+       └────────┬─────────┘        └────────┬─────────┘
+                │                           │
+                └─────────────┬─────────────┘
+                              │
+                              ▼
+                    ┌─────────────────────┐
+                    │    MongoDB Atlas    │
+                    │       Database      │
+                    └─────────────────────┘

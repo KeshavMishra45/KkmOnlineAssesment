@@ -1,17 +1,21 @@
-// MongoDB Atlas connection template.
+// MongoDB Atlas connection helper.
 //
 // Setup:
-//   1. Create a free cluster at https://cloud.mongodb.com
-//   2. Database Access -> add a database user (username/password)
-//   3. Network Access -> allow your IP (or 0.0.0.0/0 for quick testing)
-//   4. Database -> Connect -> Drivers -> copy the connection string
-//   5. Copy .env.example to .env and set MONGODB_URI / MONGODB_DB
+// 1. Create a MongoDB Atlas cluster.
+// 2. Create a database user.
+// 3. Allow your IP in Network Access.
+// 4. Copy the Node.js driver connection string.
+// 5. Add the connection string to your local .env file.
 //
-// This file is server-only (the `.server.ts` suffix keeps it out of the
-// client bundle). Import it only from other `.server.ts` files or from
-// createServerFn handlers.
+// This module is server-only because of the .server.ts suffix.
+// Never import it into client-side code.
 
-import { MongoClient, type Db, type Collection, type Document } from "mongodb";
+import {
+  MongoClient,
+  type Collection,
+  type Db,
+  type Document,
+} from "mongodb";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const MONGODB_DB = process.env.MONGODB_DB || "kkm_classroom";
@@ -19,18 +23,30 @@ const MONGODB_DB = process.env.MONGODB_DB || "kkm_classroom";
 function buildClientPromise(): Promise<MongoClient> {
   if (!MONGODB_URI) {
     throw new Error(
-      "MONGODB_URI is not set. Copy .env.example to .env and add your MongoDB Atlas connection string.",
+      "MongoDB configuration is missing. Set MONGODB_URI in your .env file.",
     );
   }
+
   const client = new MongoClient(MONGODB_URI, {
     maxPoolSize: 10,
+    serverSelectionTimeoutMS: 5000,
+    connectTimeoutMS: 5000,
   });
-  return client.connect();
+
+  return client.connect().catch((error) => {
+    const message =
+      error instanceof Error ? error.message : String(error);
+
+    throw new Error(
+      `Unable to connect to MongoDB. Check your MONGODB_URI, database user, and Atlas network access settings. ${message}`,
+    );
+  });
 }
 
-// Vite/HMR (and the TanStack Start dev server) can re-evaluate this module
-// on every file change. Cache the connection promise on `globalThis` so
-// dev reloads reuse the same pool instead of leaking new connections.
+// Vite/HMR and the TanStack Start development server can reload this
+// module multiple times. Reuse the same connection promise during
+// development to avoid creating unnecessary MongoDB connections.
+
 const globalForMongo = globalThis as unknown as {
   __kkmMongoClientPromise?: Promise<MongoClient>;
 };
@@ -39,9 +55,11 @@ function getClientPromise(): Promise<MongoClient> {
   if (process.env.NODE_ENV === "production") {
     return buildClientPromise();
   }
+
   if (!globalForMongo.__kkmMongoClientPromise) {
     globalForMongo.__kkmMongoClientPromise = buildClientPromise();
   }
+
   return globalForMongo.__kkmMongoClientPromise;
 }
 
@@ -57,7 +75,9 @@ export async function getCollection<T extends Document = Document>(
   return db.collection<T>(name);
 }
 
-// Collection name constants so the string only lives in one place.
+// Centralized collection names prevent spelling mistakes
+// and keep database naming consistent across the application.
+
 export const COLLECTIONS = {
   users: "users",
 } as const;
