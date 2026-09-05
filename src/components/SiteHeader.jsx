@@ -93,14 +93,9 @@ export default function SiteHeader() {
               </button>
             </div>
           ) : (
-            <div className="hidden items-center gap-2 sm:flex">
-              <Link to="/login" className="btn-ghost">
-                LOGIN
-              </Link>
-              <Link to="/signup" className="btn-primary">
-                SIGN UP
-              </Link>
-            </div>
+            <Link to="/login" className="btn-primary hidden sm:inline-flex">
+              LOGIN
+            </Link>
           )}
 
           <button
@@ -130,14 +125,9 @@ export default function SiteHeader() {
                 {logoutMutation.isPending ? "SIGNING OUT…" : "LOGOUT"}
               </button>
             ) : (
-              <div className="flex flex-col gap-2">
-                <Link to="/login" onClick={() => setOpen(false)} className="btn-ghost w-full text-center">
-                  LOGIN
-                </Link>
-                <Link to="/signup" onClick={() => setOpen(false)} className="btn-primary w-full text-center">
-                  SIGN UP
-                </Link>
-              </div>
+              <Link to="/login" onClick={() => setOpen(false)} className="btn-primary w-full">
+                LOGIN
+              </Link>
             )}
           </div>
         </div>

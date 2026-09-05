@@ -33,15 +33,13 @@ function buildClientPromise(): Promise<MongoClient> {
     connectTimeoutMS: 5000,
   });
 
-  return client
-  .connect()
-  .then((connectedClient) => {
-    console.log("✅ MongoDB connected successfully!");
-    return connectedClient;
-  })
-  .catch((error) => {
-    console.error("❌ MongoDB connection failed:", error);
-    throw error;
+  return client.connect().catch((error) => {
+    const message =
+      error instanceof Error ? error.message : String(error);
+
+    throw new Error(
+      `Unable to connect to MongoDB. Check your MONGODB_URI, database user, and Atlas network access settings. ${message}`,
+    );
   });
 }
 
@@ -74,23 +72,7 @@ export async function getCollection<T extends Document = Document>(
   name: string,
 ): Promise<Collection<T>> {
   const db = await getDb();
-  const collection = db.collection<T>(name);
-
-  if (name === COLLECTIONS.users) {
-    // Belt-and-braces: guarantee the uniqueness constraint that both
-    // sign-up and the (optional) seed script rely on, even on a fresh
-    // database that has never run scripts/seed-users.mjs.
-    await ensureUsersIndex(collection as unknown as Collection<Document>);
-  }
-
-  return collection;
-}
-
-let usersIndexEnsured = false;
-async function ensureUsersIndex(collection: Collection<Document>): Promise<void> {
-  if (usersIndexEnsured) return;
-  await collection.createIndex({ regNo: 1, role: 1 }, { unique: true });
-  usersIndexEnsured = true;
+  return db.collection<T>(name);
 }
 
 // Centralized collection names prevent spelling mistakes

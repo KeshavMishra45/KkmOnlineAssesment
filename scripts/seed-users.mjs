@@ -1,13 +1,7 @@
-// OPTIONAL / DEV-ONLY: seeds a demo teacher and student account into
-// MongoDB Atlas. Not needed for normal use anymore — real users can create
-// their own accounts via the /signup page. Only run this if you specifically
-// want throwaway demo credentials for local testing:
+// Seeds one teacher and one student account into MongoDB Atlas so you have
+// something to log in with. Run with:
 //
 //   node scripts/seed-users.mjs
-//
-// To remove the demo accounts this creates, run:
-//
-//   node scripts/remove-demo-users.mjs
 //
 // Reads MONGODB_URI / MONGODB_DB from your .env file (via --env-file, Node
 // 20.6+). On older Node, `export $(cat .env | xargs)` first or pass the

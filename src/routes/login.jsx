@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -126,13 +126,6 @@ function LoginPage() {
               {loginMutation.isPending ? "SIGNING IN…" : "LOGIN"}
             </button>
           </form>
-
-          <p className="mt-4 text-center text-sm text-muted-foreground">
-            New here?{" "}
-            <Link to="/signup" className="font-semibold text-primary hover:underline">
-              Create an account
-            </Link>
-          </p>
         </div>
       </main>
 

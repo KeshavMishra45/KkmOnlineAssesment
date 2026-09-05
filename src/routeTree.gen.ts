@@ -14,7 +14,6 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ExamRouteImport } from './routes/exam'
 import { Route as ExamsRouteImport } from './routes/exams'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as SignupRouteImport } from './routes/signup'
 import { Route as TeacherRouteImport } from './routes/teacher'
 import { Route as TypingRouteImport } from './routes/typing'
 import { Route as CodeExamExamIdRouteImport } from './routes/code-exam.$examId'
@@ -50,11 +49,6 @@ const ExamsRoute = ExamsRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TeacherRoute = TeacherRouteImport.update({
@@ -120,7 +114,6 @@ export interface FileRoutesByFullPath {
   '/exam': typeof ExamRoute
   '/exams': typeof ExamsRoute
   '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
   '/teacher': typeof TeacherRouteWithChildren
   '/typing': typeof TypingRoute
   '/code-exam/$examId': typeof CodeExamExamIdRoute
@@ -138,7 +131,6 @@ export interface FileRoutesByTo {
   '/exam': typeof ExamRoute
   '/exams': typeof ExamsRoute
   '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
   '/typing': typeof TypingRoute
   '/code-exam/$examId': typeof CodeExamExamIdRoute
   '/dashboard/analysis': typeof DashboardAnalysisRoute
@@ -157,7 +149,6 @@ export interface FileRoutesById {
   '/exam': typeof ExamRoute
   '/exams': typeof ExamsRoute
   '/login': typeof LoginRoute
-  '/signup': typeof SignupRoute
   '/teacher': typeof TeacherRouteWithChildren
   '/typing': typeof TypingRoute
   '/code-exam/$examId': typeof CodeExamExamIdRoute
@@ -178,7 +169,6 @@ export interface FileRouteTypes {
     | '/exam'
     | '/exams'
     | '/login'
-    | '/signup'
     | '/teacher'
     | '/typing'
     | '/code-exam/$examId'
@@ -196,7 +186,6 @@ export interface FileRouteTypes {
     | '/exam'
     | '/exams'
     | '/login'
-    | '/signup'
     | '/typing'
     | '/code-exam/$examId'
     | '/dashboard/analysis'
@@ -214,7 +203,6 @@ export interface FileRouteTypes {
     | '/exam'
     | '/exams'
     | '/login'
-    | '/signup'
     | '/teacher'
     | '/typing'
     | '/code-exam/$examId'
@@ -234,7 +222,6 @@ export interface RootRouteChildren {
   ExamRoute: typeof ExamRoute
   ExamsRoute: typeof ExamsRoute
   LoginRoute: typeof LoginRoute
-  SignupRoute: typeof SignupRoute
   TeacherRoute: typeof TeacherRouteWithChildren
   TypingRoute: typeof TypingRoute
   CodeExamExamIdRoute: typeof CodeExamExamIdRoute
@@ -275,13 +262,6 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/teacher': {
@@ -415,7 +395,6 @@ const rootRouteChildren: RootRouteChildren = {
   ExamRoute: ExamRoute,
   ExamsRoute: ExamsRoute,
   LoginRoute: LoginRoute,
-  SignupRoute: SignupRoute,
   TeacherRoute: TeacherRouteWithChildren,
   TypingRoute: TypingRoute,
   CodeExamExamIdRoute: CodeExamExamIdRoute,
