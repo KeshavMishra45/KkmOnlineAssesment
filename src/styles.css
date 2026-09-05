@@ -1,0 +1,142 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * KKM Classroom design system — white + blue.
+ * All colors in oklch. Never hardcode colors in components.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ink: var(--ink);
+  --color-surface: var(--surface);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.24 0.03 255);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.24 0.03 255);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.24 0.03 255);
+  --primary: oklch(0.52 0.19 258);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.02 255);
+  --secondary-foreground: oklch(0.32 0.07 258);
+  --muted: oklch(0.97 0.01 255);
+  --muted-foreground: oklch(0.52 0.03 258);
+  --accent: oklch(0.93 0.05 255);
+  --accent-foreground: oklch(0.32 0.09 258);
+  --destructive: oklch(0.58 0.2 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.91 0.015 255);
+  --input: oklch(0.91 0.015 255);
+  --ring: oklch(0.52 0.19 258);
+  --ink: oklch(0.26 0.05 258);
+  --surface: oklch(0.98 0.012 255);
+  --success: oklch(0.6 0.14 152);
+  --warning: oklch(0.75 0.15 70);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+}
+
+@utility kkm-container {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 100rem;
+  padding-inline: 1.5rem;
+
+  @variant sm {
+    padding-inline: 2rem;
+  }
+
+  @variant xl {
+    padding-inline: 3rem;
+  }
+}
+
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.03em;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+}
+
+@utility btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+  background: transparent;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.03em;
+  transition: background 0.2s ease;
+  &:hover {
+    background: var(--color-accent);
+  }
+}
+
+@utility card-soft {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 1px 2px oklch(0.24 0.03 255 / 6%);
+}
